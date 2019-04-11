@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>render与functional </title>
+</head>
+<body>
+    <div id="app">
+        <my-btn :increment="incretol" v-once></my-btn>
+        <my-btn :increment="incretol"></my-btn>
+		<my-btn :increment="incretol"></my-btn>
+		<p>{{total}}</p>
+		<p>p1:{{msg}}</p>
+		<p v-once>p2-once:{{msg}}</p>
+		<input type="text" v-model="msg">
+    </div>
+</body>
+<script src="vue.2.6.10.js"></script>
+<script>
+//图片组件设置
+Vue.component('my-btn',{
+	template:'<button @click="incresone">{{count}}</button>',
+	data:function(){
+		return {
+			count:0
+		}
+	},
+	methods:{
+		incresone(){
+			this.count+=1;
+			this.$on('increment',function(msg){
+				console.log(msg)
+			})
+			this.$emit('increment',this.count)//'$on监听msg的值是$emit所传的值'
+		}
+	}
+})
+var app = new Vue({
+	el: '#app',
+	data: {
+		total:0,
+		msg:1
+	},
+	methods: {
+		incretol(){
+			this.total+=1
+		}
+	},
+	created () {
+		
+	}
+
+});
+
+</script>
+</html>
